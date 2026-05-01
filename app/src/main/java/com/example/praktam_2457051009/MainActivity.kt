@@ -13,7 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -23,12 +23,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.*
-import com.example.praktam_2457051009.model.Sprint
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.*
+
+import com.example.praktam_2457051009.model.Sprint
 import com.example.praktam_2457051009.model.SprintSource
 import com.example.praktam_2457051009.ui.theme.PrakTAM_2457051009Theme
 
@@ -131,10 +129,7 @@ fun Greeting(
                                 .width(160.dp)
                                 .clickable {
                                     navController.navigate("detail/${sprint.jarak}")
-                                },
-                            colors = CardDefaults.cardColors(
-                                containerColor = Color.White.copy(alpha = 0.9f)
-                            )
+                                }
                         ) {
                             Column(modifier = Modifier.padding(8.dp)) {
 
@@ -175,10 +170,7 @@ fun Greeting(
                         .fillMaxWidth()
                         .clickable {
                             navController.navigate("detail/${sprint.jarak}")
-                        },
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface
-                    )
+                        }
                 ) {
 
                     Column(modifier = Modifier.padding(16.dp)) {
@@ -232,6 +224,13 @@ fun DetailScreen(
     sprint: Sprint,
     navController: NavHostController
 ) {
+
+    // 🔥 STATE (Modul 9)
+    var isFavorite by remember { mutableStateOf(false) }
+    var counter by remember { mutableStateOf(0) }
+
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -259,6 +258,38 @@ fun DetailScreen(
         Text("Detail: ${sprint.target}")
 
         Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = {
+                counter++
+                Toast.makeText(
+                    context,
+                    "Latihan dilakukan $counter kali",
+                    Toast.LENGTH_SHORT
+                ).show()
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Mulai Latihan ($counter)")
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Button(
+            onClick = {
+                isFavorite = !isFavorite
+            },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = if (isFavorite) Color.Red else MaterialTheme.colorScheme.primary
+            )
+        ) {
+            Text(
+                if (isFavorite) "❤️ Favorit" else "🤍 Tambah ke Favorit"
+            )
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
 
         Button(
             onClick = {
