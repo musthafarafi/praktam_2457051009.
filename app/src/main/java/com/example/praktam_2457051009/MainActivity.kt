@@ -52,7 +52,7 @@ fun Greeting(modifier: Modifier = Modifier) {
         modifier = Modifier.fillMaxSize()
     ) {
 
-        // Background
+
         Image(
             painter = painterResource(id = R.drawable.track4),
             contentDescription = null,
@@ -60,7 +60,7 @@ fun Greeting(modifier: Modifier = Modifier) {
             contentScale = ContentScale.Crop
         )
 
-        // Overlay
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -74,26 +74,25 @@ fun Greeting(modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
 
-            // 🔥 JUDUL
+
             item {
                 Spacer(modifier = Modifier.height(30.dp))
 
                 Text(
                     text = "Sprint Monitoring System",
-                    fontSize = 26.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onPrimary
+
                 )
             }
 
-            // 🔥 LAZY ROW (WAJIB MODUL)
+
             item {
 
                 Text(
                     text = "Latihan Populer",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -136,23 +135,24 @@ fun Greeting(modifier: Modifier = Modifier) {
 
                 Text(
                     text = "Semua Latihan",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
             }
 
-            // 🔥 LIST UTAMA (LazyColumn)
+
             items(sprintList) { sprint ->
 
                 val context = LocalContext.current
 
                 Card(
                     colors = CardDefaults.cardColors(
-                        containerColor = Color.White.copy(alpha = 0.9f)
+                        containerColor = MaterialTheme.colorScheme.surface
                     ),
                     modifier = Modifier.fillMaxWidth()
-                ) {
+
+                )
+                {
 
                     Column(
                         modifier = Modifier.padding(16.dp) // FIX biar gak kepotong
@@ -171,21 +171,20 @@ fun Greeting(modifier: Modifier = Modifier) {
 
                         Text(
                             text = "Jenis: ${sprint.jarak}",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp
+                            style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold
+
                         )
 
                         Text(
                             text = "Latihan: ${sprint.deskripsi}",
-                            fontSize = 16.sp
+                            style = MaterialTheme.typography.bodyMedium
                         )
 
                         Text(
                             text = "Detail: ${sprint.target}",
-                            color = Color(0xFF0D47A1),
-                            fontWeight = FontWeight.SemiBold
+                            color = MaterialTheme.colorScheme.primary,
+                            style = MaterialTheme.typography.bodyMedium
                         )
-
                         Spacer(modifier = Modifier.height(12.dp))
 
                         Button(
